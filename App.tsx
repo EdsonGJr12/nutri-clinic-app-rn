@@ -1,8 +1,12 @@
-import { Home } from '@/screens/Home';
+import { Login } from '@/screens/Login';
+import theme from '@/styles/theme';
+import { PaperProvider } from 'react-native-paper';
 
 export default function App() {
   return (
-    <Home />
+    <PaperProvider theme={theme}>
+      <Login />
+    </PaperProvider>
   );
 }
 
