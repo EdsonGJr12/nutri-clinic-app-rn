@@ -1,9 +1,13 @@
+import { UserDTO } from "@/dtos/UserDTO";
 import { api } from "@/services/api";
-import { createContext, ReactNode } from "react";
+import { storageAuthToken } from "@/storage/storageAuth";
+import { createContext, ReactNode, useState } from "react";
 
 export type AuthContextDataProps = {
     signIn: (login: string, senha: string) => Promise<void>;
     signOut: () => void;
+    isAuthenticated: boolean;
+    user: UserDTO | undefined;
 }
 
 type AuthContextProviderProps = {
@@ -14,10 +18,22 @@ export const AuthContext = createContext<AuthContextDataProps>({} as AuthContext
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
+    const [user, setUser] = useState<UserDTO>();
+
+    const isAuthenticated = !!user;
 
     async function signIn(login: string, senha: string) {
+
+        console.log(login, senha);
+
         try {
-            await api.post("/auth", { login, senha })
+            const response = await api.post("/auth", { login, senha });
+            const { id, token, nomeUsuario, perfilUsuario, idPaciente } = response.data;
+
+            await storageAuthToken({ token, nomeUsuario, perfilUsuario, idPaciente });
+
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setUser({ id, nome: nomeUsuario });
         } catch (error) {
             throw error;
         }
@@ -31,9 +47,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         }
     }
 
-
     return (
-        <AuthContext.Provider value={{ signIn, signOut }}>
+        <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
             {children}
         </AuthContext.Provider>
     );

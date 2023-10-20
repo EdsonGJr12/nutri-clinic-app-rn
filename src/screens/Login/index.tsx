@@ -6,6 +6,9 @@ import { Button } from "@/components/Button";
 import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
 import { MaskedTextInput } from "react-native-mask-text";
+import Toast from 'react-native-toast-message';
+import { AppError } from "@/utils/AppError";
+
 
 export function Login() {
 
@@ -14,10 +17,28 @@ export function Login() {
     const [login, setLogin] = useState("");
     const [senha, setSenha] = useState("");
 
-    const { signIn } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { signIn, signOut } = useAuth();
 
     async function logar() {
-        await signIn(login, senha);
+        try {
+            setIsLoading(true);
+            const loginSemMascara = login.replaceAll(".", "").replaceAll("-", "")
+            await signIn(loginSemMascara, senha);
+        } catch (error) {
+            const isAppError = error instanceof AppError;
+
+            const message = isAppError ? error.detail : "Não foi possível entrar. Tente novamente mais tarde";
+
+            Toast.show({
+                type: 'info',
+                text1: 'Atenção',
+                text2: message
+            });
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -49,15 +70,16 @@ export function Login() {
                 <Input
                     label="Senha"
                     style={styles.input}
-                    secureTextEntry
                     value={senha}
                     onChangeText={setSenha}
+                    secureTextEntry
                 />
             </View>
 
             <Button
                 title="Entrar"
                 onPress={logar}
+                isLoading={isLoading}
             />
         </View>
     );
