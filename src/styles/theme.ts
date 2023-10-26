@@ -1,4 +1,5 @@
-import { MD3LightTheme } from 'react-native-paper';
+import { MD3LightTheme, configureFonts } from 'react-native-paper';
+import fontConfig from './fontConfig';
 
 export default {
     ...MD3LightTheme,
@@ -10,4 +11,5 @@ export default {
         background: "#FAFAFA",
         backgroundCard: "#ffff"
     },
+    fonts: configureFonts({ config: fontConfig })
 };

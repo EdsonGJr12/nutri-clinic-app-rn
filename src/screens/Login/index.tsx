@@ -73,6 +73,7 @@ export function Login() {
                     value={senha}
                     onChangeText={setSenha}
                     secureTextEntry
+                    autoCapitalize="none"
                 />
             </View>
 

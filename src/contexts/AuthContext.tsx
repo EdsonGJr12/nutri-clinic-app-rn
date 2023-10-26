@@ -28,12 +28,19 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
         try {
             const response = await api.post("/auth", { login, senha });
-            const { id, token, nomeUsuario, perfilUsuario, idPaciente } = response.data;
+            const {
+                id,
+                token,
+                nomeUsuario,
+                perfilUsuario,
+                idPaciente,
+                idPlanoAlimentar
+            } = response.data;
 
             await storageAuthToken({ token, nomeUsuario, perfilUsuario, idPaciente });
 
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setUser({ id, nome: nomeUsuario });
+            setUser({ id, nome: nomeUsuario, idPlanoAlimentar });
         } catch (error) {
             throw error;
         }

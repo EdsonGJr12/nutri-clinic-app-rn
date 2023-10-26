@@ -5,13 +5,31 @@ import { toastConfig } from '@/styles/toastConfig';
 import { PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
 
+import {
+  useFonts,
+  Mulish_400Regular,
+  Mulish_500Medium,
+  Mulish_700Bold
+} from '@expo-google-fonts/mulish';
+
+
 export default function App() {
+
+  const [fontsLoaded, fontError] = useFonts({
+    Mulish_400Regular,
+    Mulish_500Medium,
+    Mulish_700Bold
+  });
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
     <PaperProvider theme={theme}>
       <AuthContextProvider>
         <Routes />
       </AuthContextProvider>
-
       <Toast config={toastConfig} />
     </PaperProvider>
   );
