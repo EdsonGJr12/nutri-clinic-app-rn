@@ -36,7 +36,7 @@ export function DiaSemanaDetalhe() {
             <View style={styles.content}>
                 <FlatList
                     data={diasSemana}
-                    keyExtractor={item => String(item.idDiaSemana)}
+                    keyExtractor={item => String(item.diaSemana)}
                     horizontal
                     pagingEnabled
                     showsHorizontalScrollIndicator={false}

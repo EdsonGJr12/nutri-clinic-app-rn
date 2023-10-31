@@ -7,7 +7,7 @@ import { AppRoutesProps } from "@/routes/app.routes";
 import { DiaSemanaRefeicoesDTO } from "@/dtos/DiaSemanaRefeicoesDTO";
 
 
-export function DiaSemanaItem({ idDiaSemana, descricaoDiaSemana, refeicoes }: DiaSemanaRefeicoesDTO) {
+export function DiaSemanaItem({ diaSemana, descricaoDiaSemana, refeicoes }: DiaSemanaRefeicoesDTO) {
 
     const theme = useTheme();
 
@@ -15,7 +15,7 @@ export function DiaSemanaItem({ idDiaSemana, descricaoDiaSemana, refeicoes }: Di
 
 
     function handleDiaSemana() {
-        navigation.navigate("DiaSemanaDetalhe", { idDiaSemana });
+        navigation.navigate("DiaSemanaDetalhe", { diaSemana });
     }
 
     return (

@@ -30,7 +30,7 @@ export function DiaSemanaDetalheItem({ refeicoes }: DiaSemanaDetalheItemProps) {
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             <View style={styles.refeicoes}>
                 {refeicoes.map(refeicao => (
-                    <View>
+                    <View key={refeicao.id}>
                         <TouchableOpacity
                             onPress={() => handleToggleShowDetail(refeicao.id)}
                             style={[styles.refeicaoItem, { backgroundColor: theme.colors.background }]}

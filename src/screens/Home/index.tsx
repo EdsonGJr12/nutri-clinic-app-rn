@@ -81,10 +81,10 @@ export function Home() {
                         snapToOffsets={offsets}
                         disableIntervalMomentum
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={item => String(item.idDiaSemana)}
+                        keyExtractor={item => String(item.diaSemana)}
                         renderItem={({ item }) => (
                             <DiaSemanaItem
-                                idDiaSemana={item.idDiaSemana}
+                                diaSemana={item.diaSemana}
                                 descricaoDiaSemana={item.descricaoDiaSemana}
                                 refeicoes={item.refeicoes}
                             />

@@ -11,7 +11,7 @@ import { DiaSemanaDetalhe } from '@/screens/DiaSemanaDetalhe';
 type AppProps = {
     TabNavigation: undefined;
     PlanoAlimentar: { id: number };
-    DiaSemanaDetalhe: { idDiaSemana: number };
+    DiaSemanaDetalhe: { diaSemana: number };
 }
 
 export type AppRoutesProps = NativeStackNavigationProp<AppProps>;

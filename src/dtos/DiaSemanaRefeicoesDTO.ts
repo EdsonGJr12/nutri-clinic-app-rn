@@ -5,7 +5,7 @@ export interface RefeicaoDTO {
 }
 
 export interface DiaSemanaRefeicoesDTO {
-    idDiaSemana: number;
+    diaSemana: number;
     descricaoDiaSemana: string;
     refeicoes: RefeicaoDTO[];
 }
