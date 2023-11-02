@@ -1,8 +1,9 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        width: Dimensions.get("window").width,
+        flex: 1,
+        marginTop: 20
     },
     content: {
         width: "100%",

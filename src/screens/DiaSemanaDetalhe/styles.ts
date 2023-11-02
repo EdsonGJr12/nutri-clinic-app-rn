@@ -7,11 +7,11 @@ export const styles = StyleSheet.create({
     paginationContainer: {
         height: 100,
         width: "100%",
-        backgroundColor: "blue",
         marginBottom: 25
     },
     content: {
         flex: 1,
-        width: "100%"
+        width: "100%",
+        marginTop: 20
     }
 });

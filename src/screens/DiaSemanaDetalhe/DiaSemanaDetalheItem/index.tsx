@@ -1,17 +1,23 @@
-import { TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { Text } from "@/components/Text";
 import { RefeicaoDTO } from "@/dtos/DiaSemanaRefeicoesDTO";
 import { useTheme } from "react-native-paper";
 
 import { Feather } from '@expo/vector-icons';
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
+import { Route } from "react-native-tab-view";
 interface DiaSemanaDetalheItemProps {
-    refeicoes: RefeicaoDTO[];
+    route: Route;
 }
 
-export function DiaSemanaDetalheItem({ refeicoes }: DiaSemanaDetalheItemProps) {
+export function DiaSemanaDetalheItem({ ...rest }: DiaSemanaDetalheItemProps) {
+
+    const idPlanoDiaSemana = rest.route.key;
+    const [refeicoes, setRefeicoes] = useState<RefeicaoDTO[]>([])
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const theme = useTheme();
 
@@ -24,6 +30,27 @@ export function DiaSemanaDetalheItem({ refeicoes }: DiaSemanaDetalheItemProps) {
         } else {
             setRefeicoesShowing([...refeicoesShowing, idRefeicao]);
         }
+    }
+
+    async function carregarRefeicoes() {
+        try {
+            const response = await api.get<RefeicaoDTO[]>(`/planos-alimentares-dia-semana/${idPlanoDiaSemana}/refeicoes`);
+            setRefeicoes(response.data);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        carregarRefeicoes();
+    }, [idPlanoDiaSemana]);
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, backgroundColor: theme.colors.background, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color={theme.colors.primary} />
+            </View>
+        )
     }
 
     return (
