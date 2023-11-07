@@ -80,7 +80,7 @@ export function DiaSemanaDetalhe() {
                         style={{ backgroundColor: theme.colors.background }}
                         activeColor={theme.colors.primary}
                         inactiveColor={"black"}
-                        renderLabel={({ route, focused, color }) => (
+                        renderLabel={({ route, color }) => (
                             <Text style={{ color, margin: 8, textAlign: "center" }}>
                                 {route.title}
                             </Text>

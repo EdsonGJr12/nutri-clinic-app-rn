@@ -7,7 +7,8 @@ export type AuthContextDataProps = {
     signIn: (login: string, senha: string) => Promise<void>;
     signOut: () => void;
     isAuthenticated: boolean;
-    user: UserDTO | undefined;
+    user: UserDTO;
+    updateUser: (user: UserDTO) => Promise<void>;
 }
 
 type AuthContextProviderProps = {
@@ -18,13 +19,13 @@ export const AuthContext = createContext<AuthContextDataProps>({} as AuthContext
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
-    const [user, setUser] = useState<UserDTO>();
+    const [user, setUser] = useState<UserDTO>({} as UserDTO);
 
-    const isAuthenticated = !!user;
+    const isAuthenticated = !!user?.id;
+
+    console.log(user)
 
     async function signIn(login: string, senha: string) {
-
-        console.log(login, senha);
 
         try {
             const response = await api.post("/auth", { login, senha });
@@ -34,13 +35,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
                 nomeUsuario,
                 perfilUsuario,
                 idPaciente,
-                idPlanoAlimentar
+                idPlanoAlimentar,
+                avatar
             } = response.data;
 
-            await storageAuthToken({ token, nomeUsuario, perfilUsuario, idPaciente });
+            await storageAuthToken({ token, nomeUsuario, perfilUsuario, idPaciente, avatar });
 
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setUser({ id, nome: nomeUsuario, idPlanoAlimentar });
+            setUser({ id, nome: nomeUsuario, idPlanoAlimentar, avatar });
         } catch (error) {
             throw error;
         }
@@ -54,8 +56,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         }
     }
 
+    async function updateUser(user: UserDTO) {
+        setUser(user);
+    }
+
     return (
-        <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
+        <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

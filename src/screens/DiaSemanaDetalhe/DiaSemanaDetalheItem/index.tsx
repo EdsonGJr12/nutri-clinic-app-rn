@@ -85,10 +85,12 @@ export function DiaSemanaDetalheItem({ ...rest }: DiaSemanaDetalheItemProps) {
                             </View>
 
                             {refeicoesShowing.includes(refeicao.id) && (
-                                <View>
-                                    <Text>
-                                        Teste
-                                    </Text>
+                                <View style={{ marginTop: 12 }}>
+                                    {refeicao.alimentos.map(alimento => (
+                                        <Text key={alimento.id}>
+                                            {alimento.descricao}
+                                        </Text>
+                                    ))}
                                 </View>
                             )}
                         </TouchableOpacity>

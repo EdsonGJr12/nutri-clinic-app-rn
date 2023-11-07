@@ -6,6 +6,7 @@ interface StorageAuthToken {
     nomeUsuario: string;
     perfilUsuario: string;
     idPaciente: number;
+    avatar: string;
 }
 
 export async function storageAuthToken(storage: StorageAuthToken) {

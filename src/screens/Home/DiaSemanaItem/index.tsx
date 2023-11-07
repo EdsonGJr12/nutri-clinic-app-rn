@@ -4,10 +4,14 @@ import { Text } from "@/components/Text";
 import { useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AppRoutesProps } from "@/routes/app.routes";
-import { DiaSemanaRefeicoesDTO } from "@/dtos/DiaSemanaRefeicoesDTO";
+import { RefeicaoDTO } from "@/dtos/DiaSemanaRefeicoesDTO";
+interface DiaSemanaItemProps {
+    diaSemana: number;
+    descricaoDiaSemana: string;
+    refeicoes: RefeicaoDTO[];
+}
 
-
-export function DiaSemanaItem({ diaSemana, descricaoDiaSemana, refeicoes }: DiaSemanaRefeicoesDTO) {
+export function DiaSemanaItem({ diaSemana, descricaoDiaSemana, refeicoes }: DiaSemanaItemProps) {
 
     const theme = useTheme();
 
