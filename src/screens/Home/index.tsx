@@ -126,11 +126,11 @@ export function Home() {
                     )}
 
                     <Text variant="headlineMedium" style={[styles.headerWelcome, { color: theme.colors.secondary }]}>
-                        Seja bem vindo
+                        Seja bem vindo(a)
                     </Text>
 
                     <Text variant="headlineMedium" style={[styles.headerUserName, { color: theme.colors.secondary }]}>
-                        João
+                        {user.nome}
                     </Text>
                 </View>
             </View>

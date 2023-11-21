@@ -2,6 +2,8 @@ import { UserDTO } from "@/dtos/UserDTO";
 import { api } from "@/services/api";
 import { storageAuthToken } from "@/storage/storageAuth";
 import { createContext, ReactNode, useState } from "react";
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 export type AuthContextDataProps = {
     signIn: (login: string, senha: string) => Promise<void>;
@@ -28,7 +30,21 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     async function signIn(login: string, senha: string) {
 
         try {
-            const response = await api.post("/auth", { login, senha });
+
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+
+            const pushToken = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig?.extra?.eas.projectId })).data;
+
+            const response = await api.post("/auth", { login, senha, pushToken });
             const {
                 id,
                 token,
@@ -44,6 +60,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             setUser({ id, nome: nomeUsuario, idPlanoAlimentar, avatar });
         } catch (error) {
+            console.log(error)
             throw error;
         }
     }

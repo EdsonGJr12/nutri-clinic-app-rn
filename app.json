@@ -23,7 +23,10 @@
         "foregroundImage": "./assets/app-adaptive-icon.png",
         "backgroundColor": "#F8F9FA"
       },
-      "package": "br.com.nutriclinicapp"
+      "package": "br.com.nutriclinicapp",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,6 +41,11 @@
           "photosPermission": "O aplicativo necessita acessar suas fotos."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4104eb9f-7286-44d2-9b65-6f12054f25c4"
+      }
+    }
   }
 }
