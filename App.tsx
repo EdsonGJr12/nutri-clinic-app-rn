@@ -4,6 +4,8 @@ import theme from '@/styles/theme';
 import { toastConfig } from '@/styles/toastConfig';
 import { PaperProvider } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import * as Notifications from 'expo-notifications';
+
 
 import {
   useFonts,
@@ -11,6 +13,14 @@ import {
   Mulish_500Medium,
   Mulish_700Bold
 } from '@expo-google-fonts/mulish';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 
 export default function App() {
